@@ -81,8 +81,9 @@ function onSubmit(evt) {
   gallery.innerHTML = '';
   //   btnLoad.classList.add('btn-hidden');
 
-  if (!evt.target.elements.searchQuery.value) {
+  if (!evt.target.elements.searchQuery.value.trim()) {
     Notiflix.Notify.failure('Please, enter a search query');
+    return;
   } else {
     addGallerySubmit();
   }
