@@ -43,7 +43,7 @@ async function addGalleryPag() {
     createGalleryItem(images);
     lightbox.refresh();
 
-    if (page > totalPages) {
+    if (page === totalPages) {
       Notiflix.Notify.warning(
         "We're sorry, but you've reached the end of search results."
       );
@@ -62,7 +62,7 @@ function onSubmit(evt) {
   evt.preventDefault();
   page = 1;
   gallery.innerHTML = '';
-  console.log('працює сабміт');
+  // console.log('працює сабміт');
 
   if (!evt.target.elements.searchQuery.value.trim()) {
     Notiflix.Notify.failure('Please, enter a search query');
@@ -89,10 +89,11 @@ function addImages(response) {
 }
 
 function onPagination(entries, observer) {
+  page += 1;
   entries.forEach(entry => {
-    // console.log(entry);
-    console.log('працює обсервер');
-    // page += 1;
+    // // console.log(entry);
+    // console.log('працює обсервер');
+
     if (entry.isIntersecting) {
       addGalleryPag();
       if (page === totalPages) {
