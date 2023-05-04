@@ -7,7 +7,7 @@ import Notiflix from 'notiflix';
 
 const form = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
-// const btnLoad = document.querySelector('.load-more');
+
 const guard = document.querySelector('.guard');
 let query = '';
 let page = 1;
@@ -36,30 +36,15 @@ async function addGallerySubmit() {
   }
 }
 
-// async function addGalleryClick() {
-//   try {
-//     const response = await getGallery(query, page);
-//     const images = response.data.hits;
-//     createGalleryItem(images);
-//     scroll();
-//     lightbox.refresh();
-//     if (page !== totalPages) {
-//       observer.observe(guard);
-//     }
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
 async function addGalleryPag() {
   try {
     scroll();
-    const response = await getGallery(query, page);
-    const images = response.data.hits;
-    createGalleryItem(images);
-    lightbox.refresh();
-
-    if (page > totalPages) {
+    if (page <= totalPages) {
+      const response = await getGallery(query, page);
+      const images = response.data.hits;
+      createGalleryItem(images);
+      lightbox.refresh();
+    } else if (page >= totalPages) {
       //     evt.target.classList.add('btn-hidden');
       Notiflix.Notify.warning(
         "We're sorry, but you've reached the end of search results."
@@ -84,9 +69,8 @@ function onSubmit(evt) {
   if (!evt.target.elements.searchQuery.value.trim()) {
     Notiflix.Notify.failure('Please, enter a search query');
     return;
-  } else {
-    addGallerySubmit();
   }
+  return addGallerySubmit();
 }
 
 function addImages(response) {
@@ -105,17 +89,6 @@ function addImages(response) {
     lightbox.refresh();
   }
 }
-
-// function onClick(evt) {
-//   page += 1;
-//   addGalleryClick();
-//   if (page > totalPages) {
-//     evt.target.classList.add('btn-hidden');
-//     Notiflix.Notify.warning(
-//       "We're sorry, but you've reached the end of search results."
-//     );
-//   }
-// }
 
 function onPagination(entries, observer) {
   entries.forEach(entry => {
