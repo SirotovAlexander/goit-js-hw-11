@@ -22,7 +22,6 @@ const observer = new IntersectionObserver(onPagination, options);
 
 form.addEventListener('change', onInput);
 form.addEventListener('submit', onSubmit);
-// btnLoad.addEventListener('click', onClick);
 
 async function addGallerySubmit() {
   try {
@@ -45,7 +44,6 @@ async function addGalleryPag() {
       createGalleryItem(images);
       lightbox.refresh();
     } else if (page >= totalPages) {
-      //     evt.target.classList.add('btn-hidden');
       Notiflix.Notify.warning(
         "We're sorry, but you've reached the end of search results."
       );
@@ -64,7 +62,6 @@ function onSubmit(evt) {
   evt.preventDefault();
   page = 1;
   gallery.innerHTML = '';
-  //   btnLoad.classList.add('btn-hidden');
 
   if (!evt.target.elements.searchQuery.value.trim()) {
     Notiflix.Notify.failure('Please, enter a search query');

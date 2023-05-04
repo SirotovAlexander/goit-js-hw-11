@@ -19,7 +19,6 @@ async function getGallery(query, page) {
 
   totalPages = response.data.totalHits / per_page;
 
-  // totalPages = 4;
   return response;
 }
 
