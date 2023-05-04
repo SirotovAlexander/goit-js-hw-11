@@ -27,7 +27,7 @@ async function addGallerySubmit() {
   try {
     const response = await getGallery(query, page);
     addImages(response);
-    if (page !== totalPages) {
+    if (page < totalPages) {
       observer.observe(guard);
     }
   } catch (error) {
@@ -43,8 +43,7 @@ async function addGalleryPag() {
     createGalleryItem(images);
     lightbox.refresh();
 
-    if (page === totalPages) {
-      //     evt.target.classList.add('btn-hidden');
+    if (page > totalPages) {
       Notiflix.Notify.warning(
         "We're sorry, but you've reached the end of search results."
       );
@@ -64,11 +63,12 @@ function onSubmit(evt) {
   page = 1;
   gallery.innerHTML = '';
   console.log('працює сабміт');
+
   if (!evt.target.elements.searchQuery.value.trim()) {
     Notiflix.Notify.failure('Please, enter a search query');
-    return;
+  } else {
+    addGallerySubmit();
   }
-  return addGallerySubmit();
 }
 
 function addImages(response) {
@@ -91,8 +91,7 @@ function addImages(response) {
 function onPagination(entries, observer) {
   entries.forEach(entry => {
     // console.log(entry);
-    console.log('працює обзервер');
-
+    console.log('працює обсервер');
     if (entry.isIntersecting) {
       page += 1;
       addGalleryPag();
