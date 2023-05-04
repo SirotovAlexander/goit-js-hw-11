@@ -38,12 +38,13 @@ async function addGallerySubmit() {
 async function addGalleryPag() {
   try {
     scroll();
-    if (page <= totalPages) {
-      const response = await getGallery(query, page);
-      const images = response.data.hits;
-      createGalleryItem(images);
-      lightbox.refresh();
-    } else if (page >= totalPages) {
+    const response = await getGallery(query, page);
+    const images = response.data.hits;
+    createGalleryItem(images);
+    lightbox.refresh();
+
+    if (page === totalPages) {
+      //     evt.target.classList.add('btn-hidden');
       Notiflix.Notify.warning(
         "We're sorry, but you've reached the end of search results."
       );
@@ -62,7 +63,7 @@ function onSubmit(evt) {
   evt.preventDefault();
   page = 1;
   gallery.innerHTML = '';
-
+  console.log('працює сабміт');
   if (!evt.target.elements.searchQuery.value.trim()) {
     Notiflix.Notify.failure('Please, enter a search query');
     return;
@@ -89,7 +90,9 @@ function addImages(response) {
 
 function onPagination(entries, observer) {
   entries.forEach(entry => {
-    console.log(entry);
+    // console.log(entry);
+    console.log('працює обзервер');
+
     if (entry.isIntersecting) {
       page += 1;
       addGalleryPag();
