@@ -92,8 +92,8 @@ function onPagination(entries, observer) {
   entries.forEach(entry => {
     // console.log(entry);
     console.log('працює обсервер');
+    page += 1;
     if (entry.isIntersecting) {
-      page += 1;
       addGalleryPag();
       if (page === totalPages) {
         observer.unobserve(guard);
