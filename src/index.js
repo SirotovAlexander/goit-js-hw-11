@@ -60,6 +60,7 @@ function onInput(evt) {
 
 function onSubmit(evt) {
   evt.preventDefault();
+  observer.unobserve(guard);
   page = 1;
   gallery.innerHTML = '';
   // console.log('працює сабміт');
